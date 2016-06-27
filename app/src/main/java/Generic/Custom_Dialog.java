@@ -10,7 +10,7 @@ import android.widget.TextView;
 import edistrict.hp.ilfstechnologies.com.edistrict_hp.R;
 
 /**
- * Created by kuush on 6/16/2016.
+ * Created by kuush on 6/27/2016.
  */
 public class Custom_Dialog {
 

@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by kuush on 6/8/2016.
+ * Created by kuush on 6/25/2016.
  */
 public class helper_Functions {
 
@@ -18,6 +18,9 @@ public class helper_Functions {
         matcher = pattern.matcher(email);
         return matcher.matches();
     }
+
+
+
 }
 
 

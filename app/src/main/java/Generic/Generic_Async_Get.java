@@ -3,14 +3,13 @@ package Generic;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-
 import Enum.TaskType;
 import Abstract.AsyncTaskListener;
 import HTTP.HttpManager;
 
 
 /**
- * Created by kuush on 6/17/2016.
+ * Created by kuush on 6/27/2016.
  */
 public class Generic_Async_Get extends AsyncTask<String,Void ,String> {
 

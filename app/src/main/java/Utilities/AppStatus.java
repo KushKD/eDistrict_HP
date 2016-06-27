@@ -6,7 +6,7 @@ import android.net.NetworkInfo;
 import android.util.Log;
 
 /**
- * Created by kuush on 6/21/2016.
+ * Created by kuush on 6/25/2016.
  */
 public class AppStatus {
     private static AppStatus instance = new AppStatus();
