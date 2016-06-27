@@ -19,7 +19,7 @@ String rating = "1.0";
 
 
 
-        public void showDialog(final Activity activity, String msg){
+        public static void showDialog(final Activity activity, String msg){
             final Dialog dialog = new Dialog(activity);
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             dialog.setCancelable(false);

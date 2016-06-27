@@ -73,24 +73,24 @@ public class Registration extends AppCompatActivity implements AsyncTaskListener
 
                             }else{
 
-                                Custom_Dialog CM = new Custom_Dialog();
-                                CM.showDialog(Registration.this ,"Unable to connect to Internet. Please connect to Internet.");
+
+                                Custom_Dialog.showDialog(Registration.this ,"Unable to connect to Internet. Please connect to Internet.");
                             }
 
 
                         }else{
-                            Custom_Dialog CM = new Custom_Dialog();
-                            CM.showDialog(Registration.this ,"Please enter a vaild email address.");
+
+                            Custom_Dialog.showDialog(Registration.this ,"Please enter a vaild email address.");
                         }
 
                     } else {
-                        Custom_Dialog CM = new Custom_Dialog();
-                        CM.showDialog(Registration.this ,"Please enter a valid 10 digit Mobile number.");
+
+                        Custom_Dialog.showDialog(Registration.this ,"Please enter a valid 10 digit Mobile number.");
                     }
 
                 }else{
-                    Custom_Dialog CM = new Custom_Dialog();
-                    CM.showDialog(Registration.this ,"Please enter your Name.");
+
+                    Custom_Dialog.showDialog(Registration.this ,"Please enter your Name.");
                 }
 
             }
@@ -114,11 +114,11 @@ public class Registration extends AppCompatActivity implements AsyncTaskListener
         if(taskType == TaskType.USER_LOGIN) {
            // String Result_to_Show = null;
           //  Result_to_Show = Vehicle_In_Out_Json.VehicleIn_Parse(result);
-            Custom_Dialog CM = new Custom_Dialog();
-            CM.showDialog(Registration.this, result);
+
+            Custom_Dialog.showDialog(Registration.this, result);
         }else{
-            Custom_Dialog CM = new Custom_Dialog();
-            CM.showDialog(Registration.this, "Something went wrong. Please try again later.");
+
+            Custom_Dialog.showDialog(Registration.this, "Something went wrong. Please try again later.");
         }
     }
 
