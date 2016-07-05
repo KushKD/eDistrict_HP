@@ -3,6 +3,9 @@ package Generic;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+
+import java.io.IOException;
+
 import Enum.TaskType;
 import Abstract.AsyncTaskListener;
 import HTTP.HttpManager;
@@ -51,7 +54,11 @@ public class Generic_Async_Get extends AsyncTask<String,Void ,String> {
     @Override
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
-        taskListener.onTaskCompleted(result, taskType);
+        try {
+            taskListener.onTaskCompleted(result, taskType);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         dialog.dismiss();
     }
 

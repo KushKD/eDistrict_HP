@@ -2,9 +2,6 @@ package JsonManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONTokener;
-
-import Model.User_Pojo;
 
 /**
  * Created by kuush on 6/16/2016.
@@ -25,7 +22,7 @@ public class Registration_Json {
         }
     }
 
-    public static User_Pojo Parse_Data_Registration(String s) {
+   /* public static User_Pojo Parse_Data_Registration(String s) {
 
         String g_Table = null;
 
@@ -127,7 +124,7 @@ public class Registration_Json {
             e.printStackTrace();
             return USER=null;
         }
-    }
+    }*/
 
 
 }

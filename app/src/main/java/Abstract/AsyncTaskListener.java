@@ -2,6 +2,9 @@ package Abstract;
 
 
 import android.app.Activity;
+
+import java.io.IOException;
+
 import Enum.TaskType;
 
 /**
@@ -10,7 +13,7 @@ import Enum.TaskType;
 
 public interface AsyncTaskListener {
 
-     void onTaskCompleted(String result, TaskType taskType);
+     void onTaskCompleted(String result, TaskType taskType) throws IOException;
 
      void onTaskCompleted(Activity activity, String result, TaskType taskType);
 

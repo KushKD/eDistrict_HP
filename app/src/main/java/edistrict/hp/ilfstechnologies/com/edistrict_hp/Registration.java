@@ -6,9 +6,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
+
 import Abstract.AsyncTaskListener;
 import Generic.Custom_Dialog;
-import Model.User_Pojo;
+import Model.User;
 import Utilities.AppStatus;
 import Utilities.Econstants;
 import Utilities.helper_Functions;
@@ -31,6 +37,7 @@ public class Registration extends Activity implements AsyncTaskListener {
         et_email = (EditText)findViewById(R.id.etemail);
         bt_reset = (Button)findViewById(R.id.back);
         bt_register = (Button)findViewById(R.id.register);
+
 
 
         bt_reset.setOnClickListener(new View.OnClickListener() {
@@ -88,7 +95,7 @@ public class Registration extends Activity implements AsyncTaskListener {
 
 
     @Override
-    public void onTaskCompleted(String result, TaskType taskType) {
+    public void onTaskCompleted(String result, TaskType taskType) throws IOException {
 
         if(taskType == TaskType.USER_LOGIN) {
             String Result_to_Show = null;
@@ -96,10 +103,19 @@ public class Registration extends Activity implements AsyncTaskListener {
             if(Result_to_Show.equalsIgnoreCase("Invalid User")) {
                 Custom_Dialog.showDialog(Registration.this, Result_to_Show);
             }else{
+
+
+
+
                 Result_to_Show = result;
                 Log.e("Result",Result_to_Show);
 
-                User_Pojo user_pojo = new User_Pojo();
+                ObjectMapper mapper=new ObjectMapper();
+                mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
+                User UP = mapper.readValue(Result_to_Show, User.class);
+                Log.e("id", String.valueOf(UP.getId()));
+
+               /* User_Pojo user_pojo = new User_Pojo();
                 user_pojo = Registration_Json.Parse_Data_Registration(Result_to_Show);
 
                 //Send the user Object to Save either in database and SharedPrefrences
@@ -186,7 +202,7 @@ public class Registration extends Activity implements AsyncTaskListener {
                 Log.e("rowData",user_pojo.getRowData());
                 Log.e("rowIndex",user_pojo.getRowIndex());
                 Log.e("wrappedData",user_pojo.getWrappedData());
-                Log.e("rowAvailable",user_pojo.getRowAvailable());
+                Log.e("rowAvailable",user_pojo.getRowAvailable());*/
 
 
 
