@@ -1,6 +1,7 @@
 package edistrict.hp.ilfstechnologies.com.edistrict_hp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -27,6 +28,7 @@ public class Registration extends Activity implements AsyncTaskListener {
 
     EditText  et_name , et_mobile , et_email;
     Button bt_reset, bt_register;
+    User UP = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,101 +111,104 @@ public class Registration extends Activity implements AsyncTaskListener {
 
                 Result_to_Show = result;
                 Log.e("Result",Result_to_Show);
-
                 ObjectMapper mapper=new ObjectMapper();
                 mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
-                User UP = mapper.readValue(Result_to_Show, User.class);
+                UP = mapper.readValue(Result_to_Show, User.class);
+
+
                 Log.e("id", String.valueOf(UP.getId()));
+                Log.e("loginId",String.valueOf(UP.getLoginId()));
+                Log.e("fullName",String.valueOf(UP.getFullName()));
+                Log.e("emailId",String.valueOf(UP.getEmailId()));
+                Log.e("districtId",String.valueOf(UP.getDistrictId()));
+                Log.e("flgPasswordUpdate",String.valueOf(UP.getFlgPasswordUpdate()));
+                Log.e("departmentId",String.valueOf(UP.getDepartmentId()));
+                Log.e("desigId",String.valueOf(UP.getDesigId()));
+                Log.e("blockId",String.valueOf(UP.getBlockId()));
+                Log.e("patwarId",String.valueOf(UP.getPatwarId()));
+                Log.e("revenuevillageId",String.valueOf(UP.getRevenuevillageId()));
+                Log.e("revenuetehsilId",String.valueOf(UP.getRevenuetehsilId()));
+                Log.e("panchayatId",String.valueOf(UP.getPanchayatId()));
+                Log.e("villageId",String.valueOf(UP.getVillageId()));
+                Log.e("tehsilId",String.valueOf(UP.getTehsilId()));
+                Log.e("townId",String.valueOf(UP.getTehsilId()));
+                Log.e("wardId",String.valueOf(UP.getWardId()));
+                Log.e("stateId",String.valueOf(UP.getStateId()));
+                Log.e("dateOfBirth",String.valueOf(UP.getDateOfBirth()));
+                Log.e("mobileNumber",String.valueOf(UP.getMobileNumber()));
+                Log.e("familyId",String.valueOf(UP.getFamilyId()));
+                Log.e("aadhaarNo",String.valueOf(UP.getAadhaarNo()));
+                Log.e("panCard",String.valueOf(UP.getPanCard()));
+                Log.e("epic",String.valueOf(UP.getEpic()));
+                Log.e("bplNo",String.valueOf(UP.getBplNo()));
+                Log.e("revenuetehsilName",String.valueOf(UP.getRevenuetehsilName()));
+                Log.e("revenuevillageName",String.valueOf(UP.getRevenuevillageName()));
+                Log.e("departmentName",String.valueOf(UP.getDepartmentName()));
+                Log.e("patwarName",String.valueOf(UP.getPatwarName()));
+                Log.e("desigName",String.valueOf(UP.getDesigName()));
+                Log.e("districtName",String.valueOf(UP.getDisplayName()));
+                Log.e("blockName",String.valueOf(UP.getBlockName()));
+                Log.e("panchayatName",String.valueOf(UP.getPanchayatName()));
+                Log.e("villageName",String.valueOf(UP.getVillageName()));
+                Log.e("tehsilName",String.valueOf(UP.getTehsilName()));
+                Log.e("townName",String.valueOf(UP.getTownName()));
+                Log.e("wardName",String.valueOf(UP.getWardName()));
+                Log.e("stateName",String.valueOf(UP.getStateName()));
+                Log.e("userGroup",String.valueOf(UP.getUserGroup()));
+                Log.e("userType",String.valueOf(UP.getUserType()));
+                Log.e("userTypeObj",String.valueOf(UP.getUserTypeObj()));
+                Log.e("userGroupName",String.valueOf(UP.getUserGroupName()));
+                Log.e("loginType",String.valueOf(UP.getLoginType()));
+                Log.e("isLoggedIn",String.valueOf(UP.getIsLoggedIn()));
+                Log.e("lastLogin",String.valueOf(UP.getLastLogin()));
+                Log.e("password",String.valueOf(UP.getPassword()));
+                Log.e("firstName",String.valueOf(UP.getFirstName()));
+                Log.e("middleName",String.valueOf(UP.getMiddleName()));
+                Log.e("lastName",String.valueOf(UP.getLastName()));
+                Log.e("fathersFirstName",String.valueOf(UP.getFathersFirstName()));
+                Log.e("fathersMiddleName",String.valueOf(UP.getFathersMiddleName()));
+                Log.e("fathersLastName",String.valueOf(UP.getFathersLastName()));
+                Log.e("emailIsLogin",String.valueOf(UP.getEmailIsLogin()));
+                Log.e("hQueId1",String.valueOf(UP.gethQueId1()));
+                Log.e("hintAns1",String.valueOf(UP.getHintAns1()));
+                Log.e("hQueId2",String.valueOf(UP.gethQueId2()));
+                Log.e("hintAns2",String.valueOf(UP.getHintAns2()));
+                Log.e("displayName",String.valueOf(UP.getDisplayName()));
+                Log.e("memberOf",String.valueOf(UP.getMemberOf()));
+                Log.e("filter",String.valueOf(UP.getFilter()));
+                Log.e("mimeType",String.valueOf(UP.getMimeType()));
+                Log.e("fileName",String.valueOf(UP.getFileName()));
+                Log.e("address",String.valueOf(UP.getAddress()));
+                Log.e("gender",String.valueOf(UP.getGender()));
+                Log.e("shortCode",String.valueOf(UP.getShortCode()));
+                Log.e("dtCreated",String.valueOf(UP.getDtCreated()));
+                Log.e("doc",String.valueOf(UP.getDoc()));
+                Log.e("block",String.valueOf(UP.getBlock()));
+                Log.e("panchayat",String.valueOf(UP.getPanchayat()));
+                Log.e("village",String.valueOf(UP.getVillage()));
+                Log.e("linkCreation",String.valueOf(UP.getLinkCreation()));
+                Log.e("forceLogin",String.valueOf(UP.getForceLogin()));
+                Log.e("state",String.valueOf(UP.getState()));
+                Log.e("district",String.valueOf(UP.getDistrict()));
+                Log.e("tehsil",String.valueOf(UP.getTehsil()));
 
-               /* User_Pojo user_pojo = new User_Pojo();
-                user_pojo = Registration_Json.Parse_Data_Registration(Result_to_Show);
+/*
+                Log.e("ruralUrban",String.valueOf(UP.getRuralUrban()));
+                Log.e("city",UP.getCity());
+                Log.e("rowCount",UP.getRowCount());
+                Log.e("rowData",UP.getRowData());
+                Log.e("rowIndex",UP.getRowIndex());
+                Log.e("wrappedData",UP.getWrappedData());
+                Log.e("rowAvailable",UP.getRowAvailable());
+                Log.e("guestUser",UP.getGuestUser());
+                Log.e("expirePasswd",UP.getExpirePasswd());*/
 
-                //Send the user Object to Save either in database and SharedPrefrences
-                Log.e("id",user_pojo.getId());
-                Log.e("loginId",user_pojo.getLoginId());
-                Log.e("fullName",user_pojo.getFullName());
-                Log.e("emailId",user_pojo.getEmailId());
-                Log.e("districtId",user_pojo.getDistrictId());
-                Log.e("flgPasswordUpdate",user_pojo.getFlgPasswordUpdate());
-                Log.e("districtName",user_pojo.getDisplayName());
-                Log.e("departmentId",user_pojo.getDepartmentId());
-                Log.e("departmentName",user_pojo.getDepartmentName());
-                Log.e("desigName",user_pojo.getDesigName());
-                Log.e("desigId",user_pojo.getDesigId());
-                Log.e("blockId",user_pojo.getBlockId());
-                Log.e("patwarId",user_pojo.getPatwarId());
-                Log.e("patwarName",user_pojo.getPatwarName());
-                Log.e("revenuevillageId",user_pojo.getRevenuevillageId());
-                Log.e("revenuevillageName",user_pojo.getRevenuevillageName());
-                Log.e("revenuetehsilId",user_pojo.getRevenuetehsilId());
-                Log.e("revenuetehsilName",user_pojo.getRevenuetehsilName());
-                Log.e("blockName",user_pojo.getBlockName());
-                Log.e("panchayatId",user_pojo.getPanchayatId());
-                Log.e("panchayatName",user_pojo.getPanchayatName());
-                Log.e("villageId",user_pojo.getVillageId());
-                Log.e("villageName",user_pojo.getVillageName());
-                Log.e("tehsilId",user_pojo.getTehsilId());
-                Log.e("tehsilName",user_pojo.getTehsilName());
-                Log.e("townId",user_pojo.getTehsilId());
-                Log.e("townName",user_pojo.getTownName());
-                Log.e("wardId",user_pojo.getWardId());
-                Log.e("wardName",user_pojo.getWardName());
-                Log.e("stateId",user_pojo.getStateId());
-                Log.e("stateName",user_pojo.getStateName());
-                Log.e("userGroup",user_pojo.getUserGroup());
-                Log.e("userType",user_pojo.getUserType());
-                Log.e("userTypeObj",user_pojo.getUserTypeObj());
-                Log.e("userGroupName",user_pojo.getUserGroupName());
-                Log.e("loginType",user_pojo.getLoginType());
-                Log.e("isLoggedIn",user_pojo.getIsLoggedIn());
-                Log.e("lastLogin",user_pojo.getLastLogin());
-                Log.e("password",user_pojo.getPassword());
-                Log.e("firstName",user_pojo.getFirstName());
-                Log.e("middleName",user_pojo.getMiddleName());
-                Log.e("lastName",user_pojo.getLastName());
-                Log.e("fathersFirstName",user_pojo.getFathersFirstName());
-                Log.e("fathersMiddleName",user_pojo.getFathersMiddleName());
-                Log.e("fathersLastName",user_pojo.getFathersLastName());
-                Log.e("dateOfBirth",user_pojo.getDateOfBirth());
-                Log.e("mobileNumber",user_pojo.getMobileNumber());
-                Log.e("aadhaarNo",user_pojo.getAadhaarNo());
-                Log.e("epic",user_pojo.getEpic());
-                Log.e("bplNo",user_pojo.getBplNo());
-                Log.e("panCard",user_pojo.getPanCard());
-                Log.e("familyId",user_pojo.getFamilyId());
-                Log.e("emailIsLogin",user_pojo.getEmailIsLogin());
-                Log.e("hQueId1",user_pojo.gethQueId1());
-                Log.e("hintAns1",user_pojo.getHintAns1());
-                Log.e("hQueId2",user_pojo.gethQueId2());
-                Log.e("hintAns2",user_pojo.getHintAns2());
-                Log.e("expirePasswd",user_pojo.getExpirePasswd());
-                Log.e("displayName",user_pojo.getDisplayName());
-                Log.e("memberOf",user_pojo.getMemberOf());
-                Log.e("filter",user_pojo.getFilter());
-                Log.e("doc",user_pojo.getDoc());
-                Log.e("mimeType",user_pojo.getMimeType());
-                Log.e("fileName",user_pojo.getFileName());
-                Log.e("dtCreated",user_pojo.getDtCreated());
-                Log.e("linkCreation",user_pojo.getLinkCreation());
-                Log.e("forceLogin",user_pojo.getForceLogin());
-                Log.e("state",user_pojo.getState());
-                Log.e("ruralUrban",user_pojo.getRuralUrban());
-                Log.e("district",user_pojo.getDistrict());
-                Log.e("tehsil",user_pojo.getTehsil());
-                Log.e("city",user_pojo.getCity());
-                Log.e("address",user_pojo.getAddress());
-                Log.e("block",user_pojo.getBlock());
-                Log.e("panchayat",user_pojo.getPanchayat());
-                Log.e("village",user_pojo.getVillage());
-                Log.e("guestUser",user_pojo.getGuestUser());
-                Log.e("gender",user_pojo.getGender());
-                Log.e("shortCode",user_pojo.getShortCode());
-                Log.e("rowCount",user_pojo.getRowCount());
-                Log.e("rowData",user_pojo.getRowData());
-                Log.e("rowIndex",user_pojo.getRowIndex());
-                Log.e("wrappedData",user_pojo.getWrappedData());
-                Log.e("rowAvailable",user_pojo.getRowAvailable());*/
 
+                Intent userSearch = new Intent();
+                userSearch.putExtra("USER", UP);
+                userSearch.setClass(Registration.this, MainScreen.class);
+                startActivity(userSearch);
+                Registration.this.finish();
 
 
 

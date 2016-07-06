@@ -867,6 +867,7 @@ public class User implements Serializable {
 		this.ward = ward;
 	}
 
+
 	public byte[] getPhotoProofData() {
 		return photoProofData;
 	}
@@ -890,5 +891,7 @@ public class User implements Serializable {
 	public void setPhotoProofFileName(String photoProofFileName) {
 		this.photoProofFileName = photoProofFileName;
 	}
+
+
 
 }
