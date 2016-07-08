@@ -1,6 +1,5 @@
 package edistrict.hp.ilfstechnologies.com.edistrict_hp;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -14,8 +13,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 import android.widget.Toast;
+
+
 
 import Model.User;
 import Presentation.Navigation_Header_TextView;
@@ -23,16 +23,19 @@ import Presentation.Navigation_Header_TextView;
 public class MainScreen extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    final User user_Data = new User();
-
-
+    User User_Data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
 
-
+try {
+    Intent getRoomDetailsIntent = getIntent();
+    User_Data = (User) getRoomDetailsIntent.getSerializableExtra("USER");
+}catch(Exception e){
+     Toast.makeText(getApplicationContext(),e.getLocalizedMessage().toString() ,Toast.LENGTH_SHORT).show();
+}
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -45,15 +48,20 @@ public class MainScreen extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
         View header=navigationView.getHeaderView(0);
 
         /*View view=navigationView.inflateHeaderView(R.layout.nav_header_main);*/
         Navigation_Header_TextView  name_tv = (Navigation_Header_TextView)header.findViewById(R.id.name);
         Navigation_Header_TextView aadhaar_tv = (Navigation_Header_TextView)header.findViewById(R.id.aadhaar_no);
 
-        name_tv.setText(String.valueOf(user_Data.getFirstName())+" "+String.valueOf(user_Data.getMiddleName())+" "+ String.valueOf(user_Data.getLastName()));
-        aadhaar_tv.setText(String.valueOf(user_Data.getAadhaarNo()));
+        name_tv.setText(String.valueOf(User_Data.getFirstName())+" "+String.valueOf(User_Data.getMiddleName())+" "+ String.valueOf(User_Data.getLastName()));
 
+        if(String.valueOf(User_Data.getAadhaarNo()).equalsIgnoreCase("null")){
+            aadhaar_tv.setText("N/A");
+        }else {
+            aadhaar_tv.setText(String.valueOf(User_Data.getAadhaarNo()));
+        }
 
     }
 
@@ -98,7 +106,7 @@ public class MainScreen extends AppCompatActivity
         if (id == R.id.nav_profile) {
             // Handle the Profile Click Button action
             Intent intent_Profile = new Intent();
-           /* intent_Profile.putExtra("USER", User_Data);*/
+            intent_Profile.putExtra("USER", User_Data);
             intent_Profile.setClass(MainScreen.this, User_Profile_Activity.class);
             startActivity(intent_Profile);
         } else if(id == R.id.nav_settings){

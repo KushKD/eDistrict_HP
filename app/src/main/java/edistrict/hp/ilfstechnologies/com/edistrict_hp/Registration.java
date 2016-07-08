@@ -117,6 +117,7 @@ public class Registration extends Activity implements AsyncTaskListener {
 
 
                 Intent userSearch = new Intent();
+                userSearch.putExtra("USER", UP);
                 userSearch.setClass(Registration.this, MainScreen.class);
                 startActivity(userSearch);
                 Registration.this.finish();
