@@ -1,5 +1,7 @@
 package edistrict.hp.ilfstechnologies.com.edistrict_hp;
 
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,26 +14,28 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import Model.User;
+import Presentation.Navigation_Header_TextView;
 
 public class MainScreen extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    final User user_Data = new User();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
+
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-     /*   FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -41,6 +45,16 @@ public class MainScreen extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View header=navigationView.getHeaderView(0);
+
+        /*View view=navigationView.inflateHeaderView(R.layout.nav_header_main);*/
+        Navigation_Header_TextView  name_tv = (Navigation_Header_TextView)header.findViewById(R.id.name);
+        Navigation_Header_TextView aadhaar_tv = (Navigation_Header_TextView)header.findViewById(R.id.aadhaar_no);
+
+        name_tv.setText(String.valueOf(user_Data.getFirstName())+" "+String.valueOf(user_Data.getMiddleName())+" "+ String.valueOf(user_Data.getLastName()));
+        aadhaar_tv.setText(String.valueOf(user_Data.getAadhaarNo()));
+
+
     }
 
     @Override
@@ -82,8 +96,11 @@ public class MainScreen extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_profile) {
-            // Handle the camera action
-            Toast.makeText(getApplicationContext(),"Profile",Toast.LENGTH_SHORT).show();
+            // Handle the Profile Click Button action
+            Intent intent_Profile = new Intent();
+           /* intent_Profile.putExtra("USER", User_Data);*/
+            intent_Profile.setClass(MainScreen.this, User_Profile_Activity.class);
+            startActivity(intent_Profile);
         } else if(id == R.id.nav_settings){
             Toast.makeText(getApplicationContext(),"Settings",Toast.LENGTH_SHORT).show();
         }
