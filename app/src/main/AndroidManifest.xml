@@ -22,7 +22,8 @@
             android:name=".MainScreen"
             android:label="@string/title_activity_main_screen"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".User_Profile_Activity"></activity>
+        <activity android:name=".User_Profile_Activity" />
+        <activity android:name=".Edit_Profile_Activity"></activity>
     </application>
 
 </manifest>
