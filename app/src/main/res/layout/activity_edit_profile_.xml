@@ -19,8 +19,8 @@
 
         <ImageButton
             android:id="@+id/user_profile_photo"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_below="@+id/header_cover_image"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="-60dp"
@@ -84,6 +84,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:elevation="8dp"
+            android:padding="5dp"
             android:id="@+id/applicant_details"
             android:background="#ffffff"
             android:layout_below="@+id/profile_layout"
@@ -130,7 +131,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
 
-                        android:background="#fff"
+                        android:background="@drawable/rounded_edittext"
                         android:textColor="#000000"
                         android:clickable="true"
                         android:padding="5dp"/>
@@ -139,7 +140,7 @@
                         android:id="@+id/middlename"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="#fff"
+                        android:background="@drawable/rounded_edittext"
                         android:textColor="#000000"
                         android:clickable="true"
                         android:padding="5dp"/>
@@ -148,7 +149,7 @@
                         android:id="@+id/lastname"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="#fff"
+                        android:background="@drawable/rounded_edittext"
                         android:textColor="#000000"
                         android:clickable="true"
                         android:padding="5dp"/>
@@ -177,7 +178,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="#fff"
+                    android:background="@drawable/rounded_edittext"
                     android:clickable="true"
                     android:textColor="#000000"
                     android:padding="5dp"/>
@@ -217,7 +218,7 @@
                         android:id="@+id/middlename_father"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="#fff"
+                        android:background="@drawable/rounded_edittext"
                         android:textColor="#000000"
                         android:clickable="true"
                         android:padding="3dp"/>
@@ -226,7 +227,7 @@
                         android:id="@+id/lastname_father"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="#fff"
+                        android:background="@drawable/rounded_edittext"
                         android:textColor="#000000"
                         android:clickable="true"
                         android:padding="3dp"/>
@@ -255,7 +256,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="#fff"
+                    android:background="@drawable/rounded_edittext"
                     android:clickable="true"
                     android:padding="5dp"/>
             </LinearLayout>
@@ -280,7 +281,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:textColor="#000000"
-                    android:background="#fff"
+                    android:background="@drawable/rounded_edittext"
                     android:clickable="true"
                     android:padding="5dp"/>
             </LinearLayout>
@@ -304,7 +305,7 @@
                     android:id="@+id/dateofbirth"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:background="#fff"
+                    android:background="@drawable/rounded_edittext"
                     android:layout_weight="1"
                     android:textColor="#000000"
                     android:padding="5dp"/>
@@ -330,7 +331,7 @@
                     android:id="@+id/mobilenumber"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:background="#fff"
+                    android:background="@drawable/rounded_edittext"
                     android:textColor="#000000"
                     android:layout_weight="1"
                     android:padding="5dp" />
@@ -343,6 +344,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:elevation="8dp"
+            android:padding="5dp"
             android:id="@+id/address_details"
             android:background="#ffffff"
             android:layout_below="@+id/applicant_details"
@@ -388,7 +390,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
 
-                        android:background="#fff"
+                        android:background="@drawable/rounded_edittext"
                         android:textColor="#000000"
                         android:clickable="true"
                         android:padding="5dp"/>
@@ -412,15 +414,13 @@
                     android:text="District:"
                     android:padding="5dp"/>
 
-                <EditText
+                <Spinner
                     android:id="@+id/district"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textColor="#000000"
-                    android:background="#fff"
-                    android:clickable="true"
-                    android:padding="5dp"/>
+                    android:textColor="#000000" />
+
             </LinearLayout>
 
 
@@ -439,21 +439,20 @@
                     android:text="Tehsil:"
                     android:padding="5dp"/>
 
-                <EditText
+                <Spinner
                     android:id="@+id/tehsil"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="#fff"
-                    android:textColor="#000000"
-                    android:clickable="true"
-                    android:padding="5dp"/>
+                    android:textColor="#000000"/>
             </LinearLayout>
 
             <!-- Village -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
+                android:id="@+id/village_ui"
+                android:visibility="visible"
                 android:weightSum="2"
                 android:layout_height="wrap_content">
 
@@ -462,18 +461,15 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textColor="#366988"
-                    android:text="Village:"
+                    android:text="Village/Town:"
                     android:padding="5dp"/>
 
-                <EditText
+                <Spinner
                     android:id="@+id/village"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="#fff"
-                    android:textColor="#000000"
-                    android:clickable="true"
-                    android:padding="5dp"/>
+                    android:textColor="#000000"/>
             </LinearLayout>
 
 
@@ -498,7 +494,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="#fff"
+                    android:background="@drawable/rounded_edittext"
                     android:clickable="true"
                     android:padding="5dp"/>
             </LinearLayout>
@@ -508,6 +504,8 @@
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
                 android:weightSum="2"
+                android:id="@+id/block_ui"
+                android:visibility="gone"
                 android:layout_height="wrap_content">
 
                 <TextView
@@ -523,7 +521,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:textColor="#000000"
-                    android:background="#fff"
+                    android:background="@drawable/rounded_edittext"
 
                     android:clickable="true"
                     android:padding="5dp"/>
@@ -535,6 +533,8 @@
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
                 android:weightSum="2"
+                android:id="@+id/ward_ui"
+                android:visibility="gone"
                 android:layout_height="wrap_content">
 
                 <TextView
@@ -548,37 +548,13 @@
                     android:id="@+id/panchayat"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:background="#fff"
+                    android:background="@drawable/rounded_edittext"
                     android:layout_weight="1"
                     android:textColor="#000000"
                     android:padding="5dp"/>
             </LinearLayout>
 
-            <!-- Town -->
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:weightSum="2"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textColor="#366988"
-                    android:text="Town:"
-                    android:padding="5dp"/>
-
-                <EditText
-                    android:id="@+id/town"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#fff"
-                    android:textColor="#000000"
-                    android:layout_weight="1"
-                    android:padding="5dp" />
-            </LinearLayout>
 
             <!-- Ward -->
 
@@ -600,7 +576,7 @@
                     android:id="@+id/ward"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:background="#fff"
+                    android:background="@drawable/rounded_edittext"
                     android:textColor="#000000"
                     android:layout_weight="1"
                     android:padding="5dp" />
@@ -625,8 +601,8 @@
                 <EditText
                     android:id="@+id/address"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#fff"
+                    android:layout_height="70dp"
+                    android:background="@drawable/rounded_edittext"
                     android:textColor="#000000"
                     android:layout_weight="1"
                     android:padding="5dp" />
@@ -639,6 +615,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:elevation="8dp"
+            android:padding="5dp"
             android:id="@+id/registration_details"
             android:background="#ffffff"
             android:layout_below="@+id/address_details"
@@ -674,7 +651,7 @@
                     android:id="@+id/questionone"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:background="#fff"
+                    android:background="@drawable/rounded_edittext"
                     android:textColor="#366988"
                     android:padding="5dp"/>
             </LinearLayout>
@@ -712,7 +689,7 @@
                     android:id="@+id/questiontwo"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:background="#fff"
+                    android:background="@drawable/rounded_edittext"
                     android:textColor="#366988"
                     android:layout_weight="1"
                     android:padding="5dp" />
@@ -732,7 +709,7 @@
                     android:id="@+id/answertwo"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:background="#fff"
+                    android:background="@drawable/rounded_edittext"
                     android:textColor="#000000"
                     android:layout_weight="1"
                     android:padding="5dp" />

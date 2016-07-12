@@ -1,18 +1,45 @@
 package edistrict.hp.ilfstechnologies.com.edistrict_hp;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import Model.User;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class Edit_Profile_Activity extends AppCompatActivity {
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import Abstract.AsyncTaskListener;
+import Adapters.SpinAdapter_District;
+import Adapters.SpinAdapter_Tehsils;
+import Adapters.SpinAdapter_Village_Town;
+import Generic.Custom_Dialog;
+import Generic.Generic_Async_Get;
+import Model.CencusDistrict;
+import Model.CencusTehsil;
+import Model.CencusVillage_Town_New;
+import Model.User;
+import Enum.TaskType;
+import Utilities.AppStatus;
+import Utilities.Econstants;
+
+public class Edit_Profile_Activity extends Activity implements AsyncTaskListener {
 
     User User_Data = null;
     TextView user_profile_name_tv;
@@ -21,10 +48,27 @@ public class Edit_Profile_Activity extends AppCompatActivity {
     EditText firstname_father_tv, middlename_father_tv, lastname_father_tv;
     EditText gender_tv, dateofbirth_tv , aadhaar_tv, family_id_tv,mobile_number_tv;
 
-    EditText state_tv,district_tv,tehsil_tv,village_tv,city_tv,block_tv,panchayat_tv,town_tv,ward_tv,address_tv;
+    EditText state_tv,village_tv,city_tv,block_tv,panchayat_tv,town_tv,ward_tv,address_tv;
     EditText questionone_tv,questiontwo_tv,answerone_tv,answertwo_tv;
     Button Back_bt, update_bt;
     ImageView edit_Profile_IV;
+
+    Spinner district_sp,tehsil_sp,village_sp;
+
+    LinearLayout village_ui,ward_ui,block_ui;
+
+
+    protected List<CencusDistrict> Districts_Server = null;
+    protected List<CencusTehsil> Tehsils_Server = null;
+    protected List<CencusVillage_Town_New> Village_Town_New = null;
+    protected ArrayList values = null;
+    protected Map<String,String> Village_Town_Server = null;
+    private SpinAdapter_District adapter;
+    private SpinAdapter_Tehsils adapter_tehsils;
+    private SpinAdapter_Village_Town adapter_village_town;
+
+
+   // CencusDistrict C_District = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +83,10 @@ public class Edit_Profile_Activity extends AppCompatActivity {
 
         try{
             InitializeView();
-            setData();
+            setData_TextView();
+            if(AppStatus.getInstance(Edit_Profile_Activity.this).isOnline()) GetDaTaAsync(); else
+                Custom_Dialog.showDialog(Edit_Profile_Activity.this,"Please connect to Internet.");
+
 
 
         }catch(Exception e){
@@ -51,9 +98,114 @@ public class Edit_Profile_Activity extends AppCompatActivity {
                 Edit_Profile_Activity.this.finish();
             }
         });
+
+        district_sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view,
+                                       int position, long id) {
+                // Here you get the current item (a User object) that is selected by its position
+                CencusDistrict CD = adapter.getItem(position);
+                // Here you can do the action you want to...
+               // Toast.makeText(Edit_Profile_Activity.this, "Cencus: " + CD.getCencus().trim() + "\nName: " + CD.getName(), Toast.LENGTH_SHORT).show();
+
+                if(AppStatus.getInstance(Edit_Profile_Activity.this).isOnline()) GetDaTaAsync_Tehsil(CD.getCencus().trim());
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapter) {  }
+        });
+
+        tehsil_sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view,
+                                       int position, long id) {
+                // Here you get the current item (a User object) that is selected by its position
+                CencusDistrict CD = adapter.getItem(position);
+                CencusTehsil CT = adapter_tehsils.getItem(position);
+                // Here you can do the action you want to...
+               // Toast.makeText(Edit_Profile_Activity.this, "Cencus: " + CD.getCencus().trim() + "\nName: " + CD.getName(), Toast.LENGTH_SHORT).show();
+
+                if(AppStatus.getInstance(Edit_Profile_Activity.this).isOnline()) GetDaTaAsync_Village_Town(CD.getCencus().trim(),CT.getCencus().trim());
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapter) {  }
+        });
+
+        village_sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view,
+                                       int position, long id) {
+                CencusDistrict CD = adapter.getItem(position);
+                CencusTehsil CT = adapter_tehsils.getItem(position);
+                CencusVillage_Town_New CVTN = adapter_village_town.getItem(position);
+                Toast.makeText(Edit_Profile_Activity.this,  CVTN.getCode().trim() + "\n Name: " + CVTN.getName().trim(), Toast.LENGTH_SHORT).show();
+
+                if(CVTN.getCode().toString().contains("T-")){
+                    String townId = CVTN.getCode().toString().replace("T-","").trim();
+                    //Show municipality and ward
+
+                }else if(CVTN.getCode().toString().contains("V-")){
+                    String villageId =  CVTN.getCode().toString().replace("V-","").trim();
+                    //Show Block and Panchayat
+
+                }else if(CVTN.getCode().toString().equalsIgnoreCase("")){
+
+                }else{
+                    Toast.makeText(Edit_Profile_Activity.this, "Something went wrong. Please retry again.", Toast.LENGTH_SHORT).show();
+
+                }
+
+                if(AppStatus.getInstance(Edit_Profile_Activity.this).isOnline()) {
+                  //  GetDaTaAsync_Village_Town(CD.getCencus().trim(), CT.getCencus().trim());
+                }else{
+                    Custom_Dialog.showDialog(Edit_Profile_Activity.this,"Please connect to Internet.");
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapter) {  }
+        });
     }
 
-    private void setData() {
+    private void GetDaTaAsync_Village_Town(String Cencus_District ,String Cencus_Tehsil) {
+        //CENCUS_TEHSIL
+        StringBuilder SB = null;
+        SB = new StringBuilder();
+        SB.append(Econstants.URL_MAIN);
+        SB.append("getTownVillage/");
+        SB.append(Cencus_Tehsil);
+        SB.append("/");
+        SB.append(Cencus_District);
+
+        Log.d("STRING BUIFDET",SB.toString());
+
+        new Generic_Async_Get(Edit_Profile_Activity.this, Edit_Profile_Activity.this, TaskType.CENCUS_VILLAGE_TOWN).execute(SB.toString());
+
+
+    }
+
+    private void GetDaTaAsync_Tehsil(String trim) {
+        //CENCUS_TEHSIL
+        StringBuilder SB = null;
+        SB = new StringBuilder();
+        SB.append(Econstants.URL_MAIN);
+        SB.append("getTehsils/");
+        SB.append(trim);
+
+        Log.d("STRING BUIFDET",SB.toString());
+
+        new Generic_Async_Get(Edit_Profile_Activity.this, Edit_Profile_Activity.this, TaskType.CENCUS_TEHSIL).execute(SB.toString());
+
+    }
+
+    private void GetDaTaAsync() {
+
+        new Generic_Async_Get(Edit_Profile_Activity.this, Edit_Profile_Activity.this, TaskType.CENCUS_DISTRICT).execute(Econstants.URL_CENCES_DISTRICTS);
+
+    }
+
+    private void setData_TextView() {
         user_profile_name_tv.setText(String.valueOf(User_Data.getFirstName()));
         user_profile_short_bio_tv.setText(String.valueOf(User_Data.getEmailId()));
         firstname_tv.setText(String.valueOf(User_Data.getFirstName()));
@@ -68,13 +220,8 @@ public class Edit_Profile_Activity extends AppCompatActivity {
         family_id_tv.setText(String.valueOf(User_Data.getFamilyId()));
         mobile_number_tv.setText(String.valueOf(User_Data.getMobileNumber()));
         state_tv.setText("Himachal Pradesh");
-        district_tv.setText(String.valueOf(User_Data.getDistrict().getName()));
-        tehsil_tv.setText(String.valueOf(User_Data.getTehsil().getName()));
-        village_tv.setText(String.valueOf(User_Data.getVillage()));
-        // city_tv.setText(String.valueOf(User_Data.get()));
         block_tv.setText(String.valueOf(User_Data.getBlock()));
         panchayat_tv.setText(String.valueOf(User_Data.getPanchayat()));
-        town_tv.setText(String.valueOf(User_Data.getTown().getName()));
         ward_tv.setText(String.valueOf(User_Data.getWard().getName()));
         address_tv.setText(String.valueOf(User_Data.getAddress()));
         questionone_tv.setText(String.valueOf(User_Data.gethQueId1()));
@@ -99,13 +246,11 @@ public class Edit_Profile_Activity extends AppCompatActivity {
         family_id_tv = (EditText)findViewById(R.id.familyid);
         mobile_number_tv = (EditText)findViewById(R.id.mobilenumber);
         state_tv = (EditText)findViewById(R.id.state);
-        district_tv = (EditText)findViewById(R.id.district);
-        tehsil_tv = (EditText)findViewById(R.id.tehsil);
-        village_tv = (EditText)findViewById(R.id.village);
-       // city_tv = (EditText)findViewById(R.id.city);
+        district_sp = (Spinner)findViewById(R.id.district);
+        tehsil_sp = (Spinner)findViewById(R.id.tehsil);
+        village_sp = (Spinner)findViewById(R.id.village);
         block_tv = (EditText)findViewById(R.id.block);
         panchayat_tv = (EditText)findViewById(R.id.panchayat);
-        town_tv = (EditText)findViewById(R.id.town);
         ward_tv = (EditText)findViewById(R.id.ward);
         address_tv = (EditText)findViewById(R.id.address);
         questionone_tv = (EditText)findViewById(R.id.questionone);
@@ -114,5 +259,64 @@ public class Edit_Profile_Activity extends AppCompatActivity {
         answertwo_tv = (EditText)findViewById(R.id.answertwo);
         Back_bt = (Button)findViewById(R.id.back);
         edit_Profile_IV = (ImageView)findViewById(R.id.edit_Profile);
+        village_ui = (LinearLayout)findViewById(R.id.village_ui);
+        block_ui = (LinearLayout)findViewById(R.id.block_ui);
+        ward_ui = (LinearLayout)findViewById(R.id.ward_ui);
+    }
+
+    @Override
+    public void onTaskCompleted(String result, TaskType taskType) throws IOException {
+
+             if(taskType == TaskType.CENCUS_DISTRICT){
+                 Log.e("Data",result);
+                 ObjectMapper mapper=new ObjectMapper();
+                 mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
+                 Districts_Server = mapper.readValue(result, new TypeReference<List<CencusDistrict>>(){});
+                 Log.e("Length",Integer.toString(Districts_Server.size()));
+                 adapter = new SpinAdapter_District(Edit_Profile_Activity.this, android.R.layout.simple_spinner_item, Districts_Server);
+                 district_sp.setAdapter(adapter);
+             }else if(taskType == TaskType.CENCUS_TEHSIL){
+                 Log.e("Data",result);
+                 ObjectMapper mapper=new ObjectMapper();
+                 mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
+                 Tehsils_Server = mapper.readValue(result, new TypeReference<List<CencusTehsil>>(){});
+                 Log.e("Length",Integer.toString(Tehsils_Server.size()));
+                 adapter_tehsils = new SpinAdapter_Tehsils(Edit_Profile_Activity.this, android.R.layout.simple_spinner_item, Tehsils_Server);
+                 tehsil_sp.setAdapter(adapter_tehsils);
+             }else if(taskType == TaskType.CENCUS_VILLAGE_TOWN){
+                 Log.e("Data",result);
+
+                 if(result.equalsIgnoreCase("{}")){
+                     village_ui.setVisibility(View.GONE);
+                 }else{
+                     village_ui.setVisibility(View.VISIBLE);
+                     ObjectMapper mapper = new ObjectMapper();
+                     mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+                     Village_Town_Server = new HashMap<String, String>();
+                     Village_Town_Server = mapper.readValue(result, new TypeReference<Map<String, String>>() {
+                     });
+
+                     Village_Town_New = new ArrayList<>();
+                     CencusVillage_Town_New CVTN = null;
+                     for (Map.Entry<String, String> entry : Village_Town_Server.entrySet()) {
+                         CVTN = new CencusVillage_Town_New();
+                         CVTN.setCode(entry.getKey());
+                         CVTN.setName(entry.getValue());
+                         System.out.println(entry.getKey() + "/" + entry.getValue());
+                         Village_Town_New.add(CVTN);
+                     }
+                     adapter_village_town = new SpinAdapter_Village_Town(Edit_Profile_Activity.this, android.R.layout.simple_spinner_item, Village_Town_New);
+                     village_sp.setAdapter(adapter_village_town);
+                 }
+
+
+
+             }
+
+    }
+
+    @Override
+    public void onTaskCompleted(Activity activity, String result, TaskType taskType) {
+
     }
 }
