@@ -533,7 +533,7 @@
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
                 android:weightSum="2"
-                android:id="@+id/ward_ui"
+                android:id="@+id/panchayat_ui"
                 android:visibility="gone"
                 android:layout_height="wrap_content">
 
@@ -561,6 +561,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
+                android:id="@+id/ward_ui"
+                android:visibility="gone"
                 android:weightSum="2"
                 android:layout_height="wrap_content">
 

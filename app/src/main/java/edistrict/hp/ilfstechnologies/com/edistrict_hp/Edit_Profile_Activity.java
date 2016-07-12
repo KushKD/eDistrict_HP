@@ -55,7 +55,7 @@ public class Edit_Profile_Activity extends Activity implements AsyncTaskListener
 
     Spinner district_sp,tehsil_sp,village_sp;
 
-    LinearLayout village_ui,ward_ui,block_ui;
+    LinearLayout village_ui,ward_ui,block_ui,panchayat_ui;
 
 
     protected List<CencusDistrict> Districts_Server = null;
@@ -145,12 +145,18 @@ public class Edit_Profile_Activity extends Activity implements AsyncTaskListener
                 if(CVTN.getCode().toString().contains("T-")){
                     String townId = CVTN.getCode().toString().replace("T-","").trim();
                     //Show municipality and ward
+                    //Econstants.URL_MAIN/getWards/townId
+                    //Econstants.URL_MAIN/getMunicipalities/townId
 
                 }else if(CVTN.getCode().toString().contains("V-")){
                     String villageId =  CVTN.getCode().toString().replace("V-","").trim();
                     //Show Block and Panchayat
 
+                    //Econstants.URL_MAIN/getPanchayats/villageId
+                    //Econstants.URL_MAIN/getBlocks/villageId
+
                 }else if(CVTN.getCode().toString().equalsIgnoreCase("")){
+
 
                 }else{
                     Toast.makeText(Edit_Profile_Activity.this, "Something went wrong. Please retry again.", Toast.LENGTH_SHORT).show();
@@ -192,7 +198,6 @@ public class Edit_Profile_Activity extends Activity implements AsyncTaskListener
         SB.append(Econstants.URL_MAIN);
         SB.append("getTehsils/");
         SB.append(trim);
-
         Log.d("STRING BUIFDET",SB.toString());
 
         new Generic_Async_Get(Edit_Profile_Activity.this, Edit_Profile_Activity.this, TaskType.CENCUS_TEHSIL).execute(SB.toString());
@@ -262,12 +267,15 @@ public class Edit_Profile_Activity extends Activity implements AsyncTaskListener
         village_ui = (LinearLayout)findViewById(R.id.village_ui);
         block_ui = (LinearLayout)findViewById(R.id.block_ui);
         ward_ui = (LinearLayout)findViewById(R.id.ward_ui);
+        panchayat_ui = (LinearLayout)findViewById(R.id.panchayat_ui);
     }
+
 
     @Override
     public void onTaskCompleted(String result, TaskType taskType) throws IOException {
 
              if(taskType == TaskType.CENCUS_DISTRICT){
+
                  Log.e("Data",result);
                  ObjectMapper mapper=new ObjectMapper();
                  mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
@@ -275,6 +283,7 @@ public class Edit_Profile_Activity extends Activity implements AsyncTaskListener
                  Log.e("Length",Integer.toString(Districts_Server.size()));
                  adapter = new SpinAdapter_District(Edit_Profile_Activity.this, android.R.layout.simple_spinner_item, Districts_Server);
                  district_sp.setAdapter(adapter);
+
              }else if(taskType == TaskType.CENCUS_TEHSIL){
                  Log.e("Data",result);
                  ObjectMapper mapper=new ObjectMapper();
@@ -286,34 +295,35 @@ public class Edit_Profile_Activity extends Activity implements AsyncTaskListener
              }else if(taskType == TaskType.CENCUS_VILLAGE_TOWN){
                  Log.e("Data",result);
 
-                 if(result.equalsIgnoreCase("{}")){
-                     village_ui.setVisibility(View.GONE);
-                 }else{
-                     village_ui.setVisibility(View.VISIBLE);
+
                      ObjectMapper mapper = new ObjectMapper();
                      mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
                      Village_Town_Server = new HashMap<String, String>();
-                     Village_Town_Server = mapper.readValue(result, new TypeReference<Map<String, String>>() {
-                     });
+                     Village_Town_Server = mapper.readValue(result, new TypeReference<Map<String, String>>() {});
 
-                     Village_Town_New = new ArrayList<>();
-                     CencusVillage_Town_New CVTN = null;
-                     for (Map.Entry<String, String> entry : Village_Town_Server.entrySet()) {
-                         CVTN = new CencusVillage_Town_New();
-                         CVTN.setCode(entry.getKey());
-                         CVTN.setName(entry.getValue());
-                         System.out.println(entry.getKey() + "/" + entry.getValue());
-                         Village_Town_New.add(CVTN);
-                     }
-                     adapter_village_town = new SpinAdapter_Village_Town(Edit_Profile_Activity.this, android.R.layout.simple_spinner_item, Village_Town_New);
-                     village_sp.setAdapter(adapter_village_town);
+                       if(Village_Town_Server.size()==0){
+                            village_ui.setVisibility(View.GONE);
+                       }else{
+                           Village_Town_New = new ArrayList<>();
+                           CencusVillage_Town_New CVTN = null;
+                           for (Map.Entry<String, String> entry : Village_Town_Server.entrySet()) {
+                               CVTN = new CencusVillage_Town_New();
+                               CVTN.setCode(entry.getKey());
+                               CVTN.setName(entry.getValue());
+                               System.out.println(entry.getKey() + "/" + entry.getValue());
+                               Village_Town_New.add(CVTN);
+                           }
+                           adapter_village_town = new SpinAdapter_Village_Town(Edit_Profile_Activity.this, android.R.layout.simple_spinner_item, Village_Town_New);
+                           village_sp.setAdapter(adapter_village_town);
+                           village_ui.setVisibility(View.VISIBLE);
+                       }
                  }
 
 
 
              }
 
-    }
+
 
     @Override
     public void onTaskCompleted(Activity activity, String result, TaskType taskType) {
