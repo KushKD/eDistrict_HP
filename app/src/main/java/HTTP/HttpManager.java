@@ -57,18 +57,19 @@ public class HttpManager {
             HttpURLConnection con = (HttpURLConnection) url_.openConnection();
 
             if (con.getResponseCode() != 200) {
-                throw new IOException(con.getResponseMessage());
-            }
+                return "Unable to connect to Service";
+            }else {
 
 
-            reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            StringBuilder sb = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
+                reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                StringBuilder sb = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line + "\n");
+                }
+                con.disconnect();
+                return sb.toString();
             }
-            con.disconnect();
-            return sb.toString();
 
         } catch (Exception e) {
             e.printStackTrace();

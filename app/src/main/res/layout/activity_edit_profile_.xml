@@ -107,8 +107,10 @@
             <!-- Name -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:weightSum="2"
+                android:orientation="vertical"
+                android:weightSum="3"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_height="wrap_content">
 
                 <TextView
@@ -116,12 +118,50 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textColor="#366988"
+                    android:gravity="center|center_vertical|center_horizontal"
                     android:text="Name:"
                     android:padding="5dp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_weight="1"
+                    android:weightSum="3"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:text="First Name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="#366988"
+                        android:padding="5dp"/>
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="#366988"
+                        android:text="Middle Name"
+                        android:clickable="true"
+                        android:padding="5dp"/>
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#366988"
+                        android:text="Last Name"
+                        android:clickable="true"
+                        android:padding="5dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:weightSum="3"
                     android:layout_height="wrap_content"
                     android:id="@+id/layout_name"
                     android:orientation="horizontal">
@@ -130,7 +170,7 @@
                         android:id="@+id/firstname"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
+                        android:layout_weight="1"
                         android:background="@drawable/rounded_edittext"
                         android:textColor="#000000"
                         android:clickable="true"
@@ -140,6 +180,7 @@
                         android:id="@+id/middlename"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:background="@drawable/rounded_edittext"
                         android:textColor="#000000"
                         android:clickable="true"
@@ -147,6 +188,7 @@
 
                     <EditText
                         android:id="@+id/lastname"
+                        android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/rounded_edittext"
@@ -158,6 +200,104 @@
 
             </LinearLayout>
 
+
+
+
+            <!-- Father Name -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:weightSum="3"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="#366988"
+                    android:gravity="center|center_horizontal|center_vertical"
+                    android:text="Father's Name:"
+                    android:padding="5dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:weightSum="3"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:text="First Name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="#366988"
+                        android:padding="5dp"/>
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="#366988"
+                        android:text="Middle Name"
+                        android:clickable="true"
+                        android:padding="5dp"/>
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#366988"
+                        android:text="Last Name"
+                        android:clickable="true"
+                        android:padding="5dp"/>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:weightSum="3"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/layout_name_father"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/firstname_father"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rounded_edittext"
+                        android:layout_weight="1"
+                        android:textColor="#000000"
+                        android:clickable="true"
+                        android:padding="3dp"/>
+
+                    <EditText
+                        android:id="@+id/middlename_father"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/rounded_edittext"
+                        android:textColor="#000000"
+                        android:clickable="true"
+                        android:padding="3dp"/>
+
+                    <EditText
+                        android:id="@+id/lastname_father"
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rounded_edittext"
+                        android:textColor="#000000"
+                        android:clickable="true"
+                        android:padding="3dp"/>
+
+                </LinearLayout>
+            </LinearLayout>
 
             <!-- Aadhaar Number -->
             <LinearLayout
@@ -182,57 +322,6 @@
                     android:clickable="true"
                     android:textColor="#000000"
                     android:padding="5dp"/>
-            </LinearLayout>
-
-            <!-- Father Name -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:weightSum="2"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textColor="#366988"
-                    android:text="Father Name:"
-                    android:padding="5dp"/>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/layout_name_father"
-                    android:orientation="horizontal">
-
-                    <EditText
-                        android:id="@+id/firstname_father"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="#ffffff"
-                        android:textColor="#000000"
-                        android:clickable="true"
-                        android:padding="3dp"/>
-
-                    <EditText
-                        android:id="@+id/middlename_father"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/rounded_edittext"
-                        android:textColor="#000000"
-                        android:clickable="true"
-                        android:padding="3dp"/>
-
-                    <EditText
-                        android:id="@+id/lastname_father"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/rounded_edittext"
-                        android:textColor="#000000"
-                        android:clickable="true"
-                        android:padding="3dp"/>
-
-                </LinearLayout>
             </LinearLayout>
 
 
@@ -290,7 +379,7 @@
             <!-- Date Of Birth -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:weightSum="2"
                 android:layout_height="wrap_content">
 
@@ -473,11 +562,12 @@
             </LinearLayout>
 
 
-            <!-- City -->
+            <!-- Municipality -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
                 android:weightSum="2"
+                android:id="@+id/municipality_ui"
                 android:visibility="gone"
                 android:layout_height="wrap_content">
 
@@ -486,16 +576,14 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textColor="#366988"
-                    android:text="City:"
+                    android:text="Municipality:"
                     android:padding="5dp"/>
 
-                <TextView
-                    android:id="@+id/city"
+                <Spinner
+                    android:id="@+id/municipality"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/rounded_edittext"
-                    android:clickable="true"
                     android:padding="5dp"/>
             </LinearLayout>
 
@@ -515,15 +603,12 @@
                     android:textColor="#366988"
                     android:text="Block:"
                     android:padding="5dp"/>
-                <EditText
+                <Spinner
                     android:id="@+id/block"
                     android:layout_weight="1"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:textColor="#000000"
-                    android:background="@drawable/rounded_edittext"
-
-                    android:clickable="true"
                     android:padding="5dp"/>
             </LinearLayout>
 
@@ -544,11 +629,10 @@
                     android:textColor="#366988"
                     android:text="Panchayat:"
                     android:padding="5dp"/>
-                <EditText
+                <Spinner
                     android:id="@+id/panchayat"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_edittext"
                     android:layout_weight="1"
                     android:textColor="#000000"
                     android:padding="5dp"/>
@@ -574,11 +658,10 @@
                     android:text="Ward:"
                     android:padding="5dp"/>
 
-                <EditText
+                <Spinner
                     android:id="@+id/ward"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_edittext"
                     android:textColor="#000000"
                     android:layout_weight="1"
                     android:padding="5dp" />
