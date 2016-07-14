@@ -37,11 +37,13 @@ import Adapters.SpinnerAdapter_Question_Two;
 import Adapters.SpinnerAdapter_Ward;
 import Generic.Custom_Dialog;
 import Generic.Generic_Async_Get;
+import Generic.Generic_Async_Post;
 import Model.CencusBlock;
 import Model.CencusDistrict;
 import Model.CencusPanchayat;
 import Model.CencusTehsil;
 import Model.CencusVillage_Town_New;
+import Model.Customer;
 import Model.HimMuncipality;
 import Model.Question_One;
 import Model.Question_Two;
@@ -60,7 +62,7 @@ public class Edit_Profile_Activity extends Activity implements AsyncTaskListener
     private ImageView edit_Profile_IV;
     private Spinner district_sp,tehsil_sp,village_sp,municipality_sp,ward_sp,block_sp,panchayat_sp,questionone_sp,questiontwo_sp;
     private LinearLayout village_ui,ward_ui,block_ui,panchayat_ui,municipality_ui,question_one_ui,question_two_ui;
-    private String townId = null, villageId = null;
+    private String townId = null, villageId = null, districtID = null, tehsilID = null ,blockID=null, panchayatID = null, wardID=null ,municipalityID = null , question_one_spinner_value, question_two_spinner_value=null;
 
 
     protected List<CencusDistrict> Districts_Server = null;
@@ -120,6 +122,85 @@ public class Edit_Profile_Activity extends Activity implements AsyncTaskListener
                 Edit_Profile_Activity.this.finish();
             }
         });
+        
+        update_bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
+                //Get Data and Update the Project
+                UPDATE_OBJECT();
+            }
+        });
+
+        questionone_sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                Question_One Mun = adapter_question_one.getItem(position);
+                question_one_spinner_value = Mun.getQuestion_Value().toString().trim();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapter) {  }
+        });
+
+        questiontwo_sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                Question_Two Mun = adapter_question_two.getItem(position);
+                question_two_spinner_value = Mun.getQuestion_Value().toString().trim();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapter) {  }
+        });
+
+        ward_sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                Ward ward = adapter_ward.getItem(position);
+                wardID = ward.getId().toString().trim();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapter) {  }
+        });
+
+        municipality_sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                HimMuncipality Mun = adapter_municipality.getItem(position);
+                municipalityID = Mun.getId().toString().trim();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapter) {  }
+        });
+
+        panchayat_sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                CencusPanchayat CP = adapter_panchayat.getItem(position);
+                panchayatID = CP.getId().toString().trim();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapter) {  }
+        });
+
+        block_sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                CencusBlock CB = adapter_block.getItem(position);
+                blockID = CB.getId().toString().trim();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapter) {  }
+        });
+
+
+
+
 
         district_sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
@@ -127,6 +208,7 @@ public class Edit_Profile_Activity extends Activity implements AsyncTaskListener
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 CencusDistrict CD = adapter.getItem(position);
                 if(AppStatus.getInstance(Edit_Profile_Activity.this).isOnline()){
+                    districtID = CD.getCencus().trim();
                     GetDaTaAsync_Tehsil(CD.getCencus().trim());
                 }else{
                     Custom_Dialog.showDialog(Edit_Profile_Activity.this,"Please connect to Internet.");
@@ -142,15 +224,23 @@ public class Edit_Profile_Activity extends Activity implements AsyncTaskListener
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 CencusDistrict CD = adapter.getItem(position);
                 CencusTehsil CT = adapter_tehsils.getItem(position);
-
+                    tehsilID = CT.getCencus().trim();
                 if(ward_ui.getVisibility()== View.VISIBLE && municipality_ui.getVisibility() == View.VISIBLE){
                     ward_ui.setVisibility(View.GONE);
                     municipality_ui.setVisibility(View.GONE);
+                    wardID = null;
+                    municipalityID = null;
+                    townId = null;
+                    villageId = null;
                 }
 
                 if(block_ui.getVisibility()== View.VISIBLE && panchayat_ui.getVisibility() == View.VISIBLE){
                     block_ui.setVisibility(View.GONE);
                     panchayat_ui.setVisibility(View.GONE);
+                    blockID=null;
+                    panchayatID = null;
+                    townId = null;
+                    villageId = null;
                 }
 
                 if(AppStatus.getInstance(Edit_Profile_Activity.this).isOnline()){
@@ -168,24 +258,30 @@ public class Edit_Profile_Activity extends Activity implements AsyncTaskListener
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view,
                                        int position, long id) {
-                CencusDistrict CD = adapter.getItem(position);
-                CencusTehsil CT = adapter_tehsils.getItem(position);
+               // CencusDistrict CD = adapter.getItem(position);
+               // CencusTehsil CT = adapter_tehsils.getItem(position);
                 CencusVillage_Town_New CVTN = adapter_village_town.getItem(position);
 
 
                 if(CVTN.getCode().toString().contains("T-")){
                      townId = CVTN.getCode().toString().replace("T-","").trim();
+                    villageId = null;
                     if(block_ui.getVisibility()== View.VISIBLE && panchayat_ui.getVisibility() == View.VISIBLE){
                         block_ui.setVisibility(View.GONE);
                         panchayat_ui.setVisibility(View.GONE);
+                        blockID=null;
+                        panchayatID = null;
                     }
                     Show_Municipality_Ward(townId);
 
                 }else if(CVTN.getCode().toString().contains("V-")){
                      villageId =  CVTN.getCode().toString().replace("V-","").trim();
+                    townId = null;
                     if(ward_ui.getVisibility()== View.VISIBLE && municipality_ui.getVisibility() == View.VISIBLE){
                         ward_ui.setVisibility(View.GONE);
                         municipality_ui.setVisibility(View.GONE);
+                        wardID = null;
+                        municipalityID = null;
                     }
                     Show_Block_Panchayat(villageId);
 
@@ -206,6 +302,145 @@ public class Edit_Profile_Activity extends Activity implements AsyncTaskListener
             @Override
             public void onNothingSelected(AdapterView<?> adapter) {  }
         });
+    }
+
+    private void UPDATE_OBJECT() {
+
+        //name customer
+        Customer customer_post = new Customer();
+        customer_post.setFirstName(firstname_tv.getText().toString().trim());
+        Log.e("first name",firstname_tv.getText().toString().trim());
+
+        if(middlename_tv.getText().toString()!=null && !middlename_tv.getText().toString().isEmpty()) {
+            customer_post.setMiddleName(middlename_tv.getText().toString().trim());
+            Log.e("Middle Name name", middlename_tv.getText().toString().trim());
+        }else{
+            customer_post.setMiddleName("null");
+            Log.e("Middle Name name", customer_post.getMiddleName());
+        }
+
+        customer_post.setLastName(lastname_tv.getText().toString().trim());
+        Log.e("last name",lastname_tv.getText().toString().trim());
+
+        //Fathers name
+        customer_post.setFathersFirstName(firstname_father_tv.getText().toString().trim());
+        Log.e("first name father",firstname_father_tv.getText().toString().trim());
+        customer_post.setFathersMiddleName(middlename_father_tv.getText().toString().trim());
+        Log.e("middle name father",middlename_father_tv.getText().toString().trim());
+        customer_post.setFathersLastName(lastname_father_tv.getText().toString().trim());
+        Log.e("last name father",lastname_father_tv.getText().toString().trim());
+
+        //Date Of Birth
+        customer_post.setDateOfBirth(dateofbirth_tv.getText().toString().trim());
+        Log.e("DOB",dateofbirth_tv.getText().toString().trim());
+        customer_post.setAadhaarNo(aadhaar_tv.getText().toString().trim());
+        Log.e("Aadhaar",aadhaar_tv.getText().toString().trim());
+
+        customer_post.setGender(gender_tv.getText().toString().trim());
+        Log.e("Gender",gender_tv.getText().toString().trim());
+        customer_post.setMobileNumber(mobile_number_tv.getText().toString().trim());
+        Log.e("Mobile number",mobile_number_tv.getText().toString().trim());
+
+        //Address Details
+        customer_post.setState("2");
+        Log.e("state",customer_post.getState());
+        customer_post.setDistrict(districtID.trim());
+        Log.e("Distrct",districtID.toString().trim());
+        customer_post.setTehsil(tehsilID.trim());
+        Log.e("Tehsil",tehsilID.toString().trim());
+        if(villageId != null && !villageId.isEmpty()) {
+            customer_post.setVillage(villageId);
+            Log.e("village", villageId.toString().trim());
+        }else{
+            customer_post.setVillage("null");
+            Log.e("village", customer_post.getVillage());
+        }
+        if(panchayatID != null && !panchayatID.isEmpty()){
+            customer_post.setPanchayat(panchayatID);
+            Log.e("Panchayat",panchayatID);
+        }else{
+            customer_post.setPanchayat("null");
+            Log.e("Panchayat",customer_post.getPanchayat());
+        }
+
+        if(blockID != null && !blockID.isEmpty()){
+        customer_post.setBlock(blockID.trim());
+        Log.e("Block",blockID.toString().trim());
+        } else{
+            customer_post.setBlock("null");
+            Log.e("Block",customer_post.getBlock());
+        }
+        if(townId != null && !townId.isEmpty()) {
+            customer_post.setTown(townId.trim());
+            Log.e("Town", townId);
+        }else{
+            customer_post.setTown("null");
+            Log.e("Town", customer_post.getTown());
+        }
+        if(municipalityID != null && !municipalityID.isEmpty()) {
+            customer_post.setMuncipality(municipalityID);
+            Log.e("Municipality", municipalityID);
+        }else{
+            customer_post.setMuncipality("null");
+            Log.e("Municipality",  customer_post.getMuncipality());
+
+        }
+
+        if(wardID !=null && !wardID.isEmpty()) {
+            customer_post.setWard(wardID);
+            Log.e("Ward", customer_post.getWard());
+        }else{
+            customer_post.setWard("null");
+            Log.e("Ward", customer_post.getWard());
+        }
+
+        if(family_id_tv.getText().toString() !=null && !family_id_tv.getText().toString().isEmpty()) {
+            customer_post.setFamilyId(family_id_tv.getText().toString().trim());
+            Log.e("family id ",family_id_tv.getText().toString().trim());
+        }else{
+            customer_post.setFamilyId("null");
+            Log.e("family id ",customer_post.getFamilyId());
+        }
+
+        if(wardID !=null && !wardID.isEmpty()) {
+            customer_post.setWard(wardID);
+            Log.e("Ward", customer_post.getWard());
+        }else{
+            customer_post.setWard("null");
+            Log.e("Ward", customer_post.getWard());
+        }
+            customer_post.setAddress(address_tv.getText().toString().trim());
+        Log.e("address",customer_post.getAddress().toString().trim());
+
+        //Security Details
+        customer_post.sethQueId1(question_one_spinner_value);
+        Log.e("Question One",question_one_spinner_value);
+        customer_post.sethQueId2(question_two_spinner_value);
+        Log.e("Question Two",question_two_spinner_value);
+        customer_post.setHintAns1(answerone_tv.getText().toString().trim());
+        Log.e("Answer One",customer_post.getHintAns1().toString().trim());
+        customer_post.setHintAns2(answertwo_tv.getText().toString().trim());
+        Log.e("Answer Two",customer_post.getHintAns2().toString().trim());
+
+        //Others Left Out
+        customer_post.setLoginId("null");
+        Log.e("Login ID",customer_post.getLoginId());
+
+        customer_post.setEmailId(user_profile_short_bio_tv.getText().toString().trim());
+        Log.e("Email ID",customer_post.getEmailId());
+
+        customer_post.setPhotoProofData("null");
+        Log.e("Photo Proff Data",customer_post.getPhotoProofData());
+        customer_post.setPhotoProofFileName("null");
+        Log.e("Photo File Name",customer_post.getPhotoProofFileName());
+        customer_post.setPhotoProofMimeType("null");
+        Log.e("Photo Proff MIME data",customer_post.getPhotoProofMimeType());
+
+        if(AppStatus.getInstance(Edit_Profile_Activity.this).isOnline()){
+
+            new Generic_Async_Post(Edit_Profile_Activity.this, Edit_Profile_Activity.this, TaskType.POST_CUSTOMER).execute(customer_post);
+
+        }
     }
 
     private void Get_Questions_One_Two() {
@@ -388,6 +623,7 @@ public class Edit_Profile_Activity extends Activity implements AsyncTaskListener
         answerone_tv = (EditText)findViewById(R.id.answerone);
         answertwo_tv = (EditText)findViewById(R.id.answertwo);
         Back_bt = (Button)findViewById(R.id.back);
+        update_bt = (Button)findViewById(R.id.update);
         edit_Profile_IV = (ImageView)findViewById(R.id.edit_Profile);
         village_ui = (LinearLayout)findViewById(R.id.village_ui);
         block_ui = (LinearLayout)findViewById(R.id.block_ui);
@@ -532,7 +768,8 @@ public class Edit_Profile_Activity extends Activity implements AsyncTaskListener
                      questiontwo_sp.setAdapter(adapter_question_two);
                  }
 
-             }else{
+             }
+             else{
                  Custom_Dialog.showDialog(Edit_Profile_Activity.this,"Please Restart the application.");
              }
 
@@ -544,6 +781,12 @@ public class Edit_Profile_Activity extends Activity implements AsyncTaskListener
 
     @Override
     public void onTaskCompleted(Activity activity, String result, TaskType taskType) {
+
+         if(taskType == TaskType.POST_CUSTOMER){
+            Log.e("Data",result);
+            Custom_Dialog.showDialog(Edit_Profile_Activity.this,result);
+
+        }
 
     }
 }
