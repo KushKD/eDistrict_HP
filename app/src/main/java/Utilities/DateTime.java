@@ -1,4 +1,4 @@
-package HTTP;
+package Utilities;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

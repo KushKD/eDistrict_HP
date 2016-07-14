@@ -109,6 +109,7 @@
                 android:layout_width="match_parent"
                 android:orientation="vertical"
                 android:weightSum="3"
+                android:elevation="6dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_height="wrap_content">
@@ -117,7 +118,8 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textColor="#366988"
+                    android:background="#366988"
+                    android:textColor="#FFFFFF"
                     android:gravity="center|center_vertical|center_horizontal"
                     android:text="Name:"
                     android:padding="5dp"/>
@@ -134,6 +136,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textStyle="bold"
                         android:textColor="#366988"
                         android:padding="5dp"/>
 
@@ -144,6 +147,7 @@
                         android:layout_weight="1"
                         android:textColor="#366988"
                         android:text="Middle Name"
+                        android:textStyle="bold"
                         android:clickable="true"
                         android:padding="5dp"/>
 
@@ -152,6 +156,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="#366988"
+                        android:textStyle="bold"
                         android:text="Last Name"
                         android:clickable="true"
                         android:padding="5dp"/>
@@ -171,6 +176,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:inputType="textCapWords"
                         android:background="@drawable/rounded_edittext"
                         android:textColor="#000000"
                         android:clickable="true"
@@ -180,6 +186,7 @@
                         android:id="@+id/middlename"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:inputType="textCapWords"
                         android:layout_weight="1"
                         android:background="@drawable/rounded_edittext"
                         android:textColor="#000000"
@@ -193,6 +200,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/rounded_edittext"
                         android:textColor="#000000"
+                        android:inputType="textCapWords"
                         android:clickable="true"
                         android:padding="5dp"/>
 
@@ -208,6 +216,7 @@
                 android:layout_width="match_parent"
                 android:orientation="vertical"
                 android:weightSum="3"
+                android:elevation="4dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_height="wrap_content">
@@ -216,7 +225,8 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textColor="#366988"
+                    android:background="#366988"
+                    android:textColor="#FFFFFF"
                     android:gravity="center|center_horizontal|center_vertical"
                     android:text="Father's Name:"
                     android:padding="5dp"/>
@@ -233,6 +243,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textStyle="bold"
                         android:textColor="#366988"
                         android:padding="5dp"/>
 
@@ -243,6 +254,7 @@
                         android:layout_weight="1"
                         android:textColor="#366988"
                         android:text="Middle Name"
+                        android:textStyle="bold"
                         android:clickable="true"
                         android:padding="5dp"/>
 
@@ -252,6 +264,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="#366988"
                         android:text="Last Name"
+                        android:textStyle="bold"
                         android:clickable="true"
                         android:padding="5dp"/>
 
@@ -272,6 +285,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/rounded_edittext"
                         android:layout_weight="1"
+                        android:inputType="textCapWords"
                         android:textColor="#000000"
                         android:clickable="true"
                         android:padding="3dp"/>
@@ -281,6 +295,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:inputType="textCapWords"
                         android:background="@drawable/rounded_edittext"
                         android:textColor="#000000"
                         android:clickable="true"
@@ -291,6 +306,7 @@
                         android:layout_width="wrap_content"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
+                        android:inputType="textCapWords"
                         android:background="@drawable/rounded_edittext"
                         android:textColor="#000000"
                         android:clickable="true"
@@ -298,18 +314,47 @@
 
                 </LinearLayout>
             </LinearLayout>
-
-            <!-- Aadhaar Number -->
+            <!-- Date Of Birth -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:weightSum="2"
                 android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="1.4"
+                    android:textColor="#366988"
+                    android:textStyle="bold"
+                    android:text="Date Of Birth:"
+                    android:padding="5dp"/>
+                <EditText
+                    android:id="@+id/dateofbirth"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_edittext"
+                    android:layout_weight="0.6"
+                    android:textColor="#000000"
+                    android:padding="5dp"/>
+            </LinearLayout>
+
+            <!-- Aadhaar Number -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:weightSum="2"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.4"
+                    android:textStyle="bold"
                     android:textColor="#366988"
                     android:text="Aadhaar number:"
                     android:padding="5dp"/>
@@ -317,7 +362,9 @@
                     android:id="@+id/aadhaarno"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="0.6"
+                    android:inputType="number"
+                    android:maxLength="12"
                     android:background="@drawable/rounded_edittext"
                     android:clickable="true"
                     android:textColor="#000000"
@@ -329,14 +376,17 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:weightSum="2"
                 android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="1.4"
                     android:textColor="#366988"
+                    android:textStyle="bold"
                     android:text="Family ID:"
                     android:padding="5dp"/>
 
@@ -344,7 +394,7 @@
                     android:id="@+id/familyid"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="0.6"
                     android:background="@drawable/rounded_edittext"
                     android:clickable="true"
                     android:padding="5dp"/>
@@ -354,19 +404,22 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:weightSum="2"
                 android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="1.4"
                     android:textColor="#366988"
                     android:text="Gender:"
+                    android:textStyle="bold"
                     android:padding="5dp"/>
                 <EditText
                     android:id="@+id/gender"
-                    android:layout_weight="1"
+                    android:layout_weight="0.6"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:textColor="#000000"
@@ -376,29 +429,7 @@
             </LinearLayout>
 
 
-            <!-- Date Of Birth -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:weightSum="2"
-                android:layout_height="wrap_content">
 
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textColor="#366988"
-                    android:text="Date Of Birth:"
-                    android:padding="5dp"/>
-                <EditText
-                    android:id="@+id/dateofbirth"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_edittext"
-                    android:layout_weight="1"
-                    android:textColor="#000000"
-                    android:padding="5dp"/>
-            </LinearLayout>
 
             <!-- Mobile Number -->
 
@@ -406,13 +437,16 @@
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
                 android:weightSum="2"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="1.4"
                     android:textColor="#366988"
+                    android:textStyle="bold"
                     android:text="Mobile Number:"
                     android:padding="5dp"/>
 
@@ -422,7 +456,9 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/rounded_edittext"
                     android:textColor="#000000"
-                    android:layout_weight="1"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:layout_weight="0.6"
                     android:padding="5dp" />
             </LinearLayout>
 
@@ -457,20 +493,23 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:weightSum="2"
                 android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="1.4"
                     android:textColor="#366988"
+                    android:textStyle="bold"
                     android:text="State:"
                     android:padding="5dp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="0.6"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
@@ -493,13 +532,16 @@
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
                 android:weightSum="2"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="1.4"
                     android:textColor="#366988"
+                    android:textStyle="bold"
                     android:text="District:"
                     android:padding="5dp"/>
 
@@ -507,7 +549,7 @@
                     android:id="@+id/district"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="0.6"
                     android:textColor="#000000" />
 
             </LinearLayout>
@@ -517,22 +559,25 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:weightSum="2"
                 android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="1.4"
                     android:textColor="#366988"
                     android:text="Tehsil:"
+                    android:textStyle="bold"
                     android:padding="5dp"/>
 
                 <Spinner
                     android:id="@+id/tehsil"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="0.6"
                     android:textColor="#000000"/>
             </LinearLayout>
 
@@ -541,6 +586,8 @@
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
                 android:id="@+id/village_ui"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:visibility="visible"
                 android:weightSum="2"
                 android:layout_height="wrap_content">
@@ -548,8 +595,9 @@
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="1.4"
                     android:textColor="#366988"
+                    android:textStyle="bold"
                     android:text="Village/Town:"
                     android:padding="5dp"/>
 
@@ -557,7 +605,7 @@
                     android:id="@+id/village"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="0.6"
                     android:textColor="#000000"/>
             </LinearLayout>
 
@@ -568,13 +616,16 @@
                 android:orientation="horizontal"
                 android:weightSum="2"
                 android:id="@+id/municipality_ui"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:visibility="gone"
                 android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="1.4"
+                    android:textStyle="bold"
                     android:textColor="#366988"
                     android:text="Municipality:"
                     android:padding="5dp"/>
@@ -583,7 +634,7 @@
                     android:id="@+id/municipality"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="0.6"
                     android:padding="5dp"/>
             </LinearLayout>
 
@@ -593,19 +644,22 @@
                 android:orientation="horizontal"
                 android:weightSum="2"
                 android:id="@+id/block_ui"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:visibility="gone"
                 android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="1.4"
+                    android:textStyle="bold"
                     android:textColor="#366988"
                     android:text="Block:"
                     android:padding="5dp"/>
                 <Spinner
                     android:id="@+id/block"
-                    android:layout_weight="1"
+                    android:layout_weight="0.4"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:textColor="#000000"
@@ -619,21 +673,24 @@
                 android:orientation="horizontal"
                 android:weightSum="2"
                 android:id="@+id/panchayat_ui"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:visibility="gone"
                 android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="1.4"
                     android:textColor="#366988"
                     android:text="Panchayat:"
+                    android:textStyle="bold"
                     android:padding="5dp"/>
                 <Spinner
                     android:id="@+id/panchayat"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="0.6"
                     android:textColor="#000000"
                     android:padding="5dp"/>
             </LinearLayout>
@@ -646,6 +703,8 @@
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
                 android:id="@+id/ward_ui"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:visibility="gone"
                 android:weightSum="2"
                 android:layout_height="wrap_content">
@@ -653,7 +712,8 @@
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="1.4"
+                    android:textStyle="bold"
                     android:textColor="#366988"
                     android:text="Ward:"
                     android:padding="5dp"/>
@@ -663,7 +723,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:textColor="#000000"
-                    android:layout_weight="1"
+                    android:layout_weight="0.6"
                     android:padding="5dp" />
             </LinearLayout>
 
@@ -673,23 +733,27 @@
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
                 android:weightSum="2"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="1.4"
                     android:textColor="#366988"
                     android:text="Address:"
+                    android:textStyle="bold"
                     android:padding="5dp"/>
 
                 <EditText
                     android:id="@+id/address"
                     android:layout_width="fill_parent"
                     android:layout_height="70dp"
+                    android:inputType="textMultiLine"
                     android:background="@drawable/rounded_edittext"
                     android:textColor="#000000"
-                    android:layout_weight="1"
+                    android:layout_weight="0.6"
                     android:padding="5dp" />
             </LinearLayout>
 
@@ -704,7 +768,7 @@
             android:id="@+id/registration_details"
             android:background="#ffffff"
             android:layout_below="@+id/address_details"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="3dp"
             android:layout_marginTop="5dp"
             android:orientation="vertical">
 
@@ -717,7 +781,7 @@
                 android:gravity="center|center_horizontal|center_vertical"
                 android:textSize="16sp"
                 android:textColor="#FFFFFF"
-                android:text="Registration Details"
+                android:text="Security Details"
                 android:padding="5dp"/>
 
 
@@ -726,70 +790,75 @@
 
             <!-- Question One -->
             <LinearLayout
+                android:id="@+id/question_one_ui"
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:weightSum="1"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:weightSum="3"
                 android:layout_height="wrap_content">
 
-
-                <EditText
-                    android:id="@+id/questionone"
+                <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_edittext"
+                    android:layout_weight="1"
+                    android:background="#366988"
+                    android:textColor="#FFFFFF"
+                    android:gravity="center|center_horizontal|center_vertical"
+                    android:text=" Select Security Question One "
+                    android:padding="5dp"/>
+
+                <Spinner
+                    android:id="@+id/questionone"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:textColor="#366988"
                     android:padding="5dp"/>
-            </LinearLayout>
-
-            <!-- Answer One -->
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:weightSum="1"
-                android:layout_height="wrap_content">
 
                 <EditText
                     android:id="@+id/answerone"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_edittext"
                     android:layout_weight="1"
+                    android:hint="Answer for security question one"
                     android:textColor="#366988"
                     android:padding="5dp"/>
-
-
             </LinearLayout>
+
 
             <!-- Question two -->
 
             <LinearLayout
+                android:id="@+id/question_two_ui"
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:weightSum="1"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:weightSum="3"
                 android:layout_height="wrap_content">
 
 
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#366988"
+                    android:textColor="#FFFFFF"
+                    android:gravity="center|center_horizontal|center_vertical"
+                    android:text=" Select Security Question Two "
+                    android:padding="5dp"/>
 
-                <EditText
+                <Spinner
                     android:id="@+id/questiontwo"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_edittext"
                     android:textColor="#366988"
                     android:layout_weight="1"
                     android:padding="5dp" />
-            </LinearLayout>
 
-            <!-- Answer Two -->
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:weightSum="1"
-                android:layout_height="wrap_content">
-
-
-
+                <!-- Answer Two -->
                 <EditText
                     android:id="@+id/answertwo"
                     android:layout_width="fill_parent"
@@ -797,8 +866,11 @@
                     android:background="@drawable/rounded_edittext"
                     android:textColor="#000000"
                     android:layout_weight="1"
+                    android:hint="Answer for security question two"
                     android:padding="5dp" />
             </LinearLayout>
+
+
 
         </LinearLayout>
 
@@ -832,7 +904,7 @@
                 android:id="@+id/update"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#366988"
+                android:background="#876453"
                 android:textColor="#FFFFFF"
                 android:layout_weight="1"
                 android:text="Update"

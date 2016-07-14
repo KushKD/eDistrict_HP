@@ -32,6 +32,8 @@ import Adapters.SpinAdapter_Village_Town;
 import Adapters.SpinnerAdapter_Block;
 import Adapters.SpinnerAdapter_Municipality;
 import Adapters.SpinnerAdapter_Panchayat;
+import Adapters.SpinnerAdapter_Question_One;
+import Adapters.SpinnerAdapter_Question_Two;
 import Adapters.SpinnerAdapter_Ward;
 import Generic.Custom_Dialog;
 import Generic.Generic_Async_Get;
@@ -41,6 +43,8 @@ import Model.CencusPanchayat;
 import Model.CencusTehsil;
 import Model.CencusVillage_Town_New;
 import Model.HimMuncipality;
+import Model.Question_One;
+import Model.Question_Two;
 import Model.User;
 import Enum.TaskType;
 import Model.Ward;
@@ -49,23 +53,14 @@ import Utilities.Econstants;
 
 public class Edit_Profile_Activity extends Activity implements AsyncTaskListener {
 
-    User User_Data = null;
-    TextView user_profile_name_tv;
-    TextView user_profile_short_bio_tv;
-    EditText firstname_tv,middlename_tv,lastname_tv;
-    EditText firstname_father_tv, middlename_father_tv, lastname_father_tv;
-    EditText gender_tv, dateofbirth_tv , aadhaar_tv, family_id_tv,mobile_number_tv;
-
-    EditText state_tv,village_tv,city_tv,town_tv,ward_tv,address_tv;
-    EditText questionone_tv,questiontwo_tv,answerone_tv,answertwo_tv;
-    Button Back_bt, update_bt;
-    ImageView edit_Profile_IV;
-
-    Spinner district_sp,tehsil_sp,village_sp,municipality_sp,ward_sp,block_sp,panchayat_sp;
-
-    LinearLayout village_ui,ward_ui,block_ui,panchayat_ui,municipality_ui;
-    String townId = null;
-    String villageId = null;
+    private User User_Data = null;
+    private TextView user_profile_short_bio_tv,user_profile_name_tv;
+    private EditText state_tv,address_tv,answerone_tv,answertwo_tv,gender_tv, dateofbirth_tv , aadhaar_tv, family_id_tv,mobile_number_tv,firstname_father_tv, middlename_father_tv, lastname_father_tv,firstname_tv,middlename_tv,lastname_tv;
+    private Button Back_bt, update_bt;
+    private ImageView edit_Profile_IV;
+    private Spinner district_sp,tehsil_sp,village_sp,municipality_sp,ward_sp,block_sp,panchayat_sp,questionone_sp,questiontwo_sp;
+    private LinearLayout village_ui,ward_ui,block_ui,panchayat_ui,municipality_ui,question_one_ui,question_two_ui;
+    private String townId = null, villageId = null;
 
 
     protected List<CencusDistrict> Districts_Server = null;
@@ -75,8 +70,12 @@ public class Edit_Profile_Activity extends Activity implements AsyncTaskListener
     protected List<HimMuncipality> Municipality_Server = null;
     protected List<CencusBlock> Block_server = null;
     protected List<CencusPanchayat> Panchayat_Server = null;
-    protected ArrayList values = null;
+    protected List<Question_One> Question_One_List = null;
+    protected List<Question_Two> Question_Two_List = null;
     protected Map<String,String> Village_Town_Server = null;
+    protected Map<String,String> Question_One_Server = null;
+    protected Map<String,String> Question_Two_Server = null;
+
 
     private SpinAdapter_District adapter;
     private SpinAdapter_Tehsils adapter_tehsils;
@@ -85,10 +84,8 @@ public class Edit_Profile_Activity extends Activity implements AsyncTaskListener
     private SpinnerAdapter_Municipality adapter_municipality;
     private SpinnerAdapter_Block adapter_block;
     private SpinnerAdapter_Panchayat adapter_panchayat;
-
-
-
-   // CencusDistrict C_District = null;
+    private SpinnerAdapter_Question_One adapter_question_one;
+    private SpinnerAdapter_Question_Two adapter_question_two;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,8 +101,13 @@ public class Edit_Profile_Activity extends Activity implements AsyncTaskListener
         try{
             InitializeView();
             setData_TextView();
-            if(AppStatus.getInstance(Edit_Profile_Activity.this).isOnline()) GetDaTaAsync(); else
+            if(AppStatus.getInstance(Edit_Profile_Activity.this).isOnline()){
+                GetDaTaAsync();
+                Get_Questions_One_Two();
+            } else{
                 Custom_Dialog.showDialog(Edit_Profile_Activity.this,"Please connect to Internet.");
+            }
+
 
 
 
@@ -204,6 +206,26 @@ public class Edit_Profile_Activity extends Activity implements AsyncTaskListener
             @Override
             public void onNothingSelected(AdapterView<?> adapter) {  }
         });
+    }
+
+    private void Get_Questions_One_Two() {
+
+        StringBuilder SB = null;
+        SB = new StringBuilder();
+        SB.append(Econstants.URL_MAIN);
+        SB.append("getQuestionSetFirst/");
+
+        Log.d("Question One",SB.toString());
+        new Generic_Async_Get(Edit_Profile_Activity.this, Edit_Profile_Activity.this, TaskType.QUESTION_ONE).execute(SB.toString());
+
+        StringBuilder SB_Two = null;
+        SB_Two = new StringBuilder();
+        SB_Two.append(Econstants.URL_MAIN);
+        SB_Two.append("getQuestionSetSecond/");
+
+        Log.d("Question Second",SB_Two.toString());
+        new Generic_Async_Get(Edit_Profile_Activity.this, Edit_Profile_Activity.this, TaskType.QUESTION_TWO).execute(SB_Two.toString());
+
     }
 
     private void Show_Block_Panchayat(String villageId) {
@@ -333,8 +355,6 @@ public class Edit_Profile_Activity extends Activity implements AsyncTaskListener
         mobile_number_tv.setText(String.valueOf(User_Data.getMobileNumber()));
         state_tv.setText("Himachal Pradesh");
         address_tv.setText(String.valueOf(User_Data.getAddress()));
-        questionone_tv.setText(String.valueOf(User_Data.gethQueId1()));
-        questiontwo_tv.setText(String.valueOf(User_Data.gethQueId2()));
         answerone_tv.setText(String.valueOf(User_Data.getHintAns1()));
         answertwo_tv.setText(String.valueOf(User_Data.getHintAns2()));
     }
@@ -363,8 +383,8 @@ public class Edit_Profile_Activity extends Activity implements AsyncTaskListener
         panchayat_sp = (Spinner)findViewById(R.id.panchayat);
         ward_sp = (Spinner)findViewById(R.id.ward);
         address_tv = (EditText)findViewById(R.id.address);
-        questionone_tv = (EditText)findViewById(R.id.questionone);
-        questiontwo_tv = (EditText)findViewById(R.id.questiontwo);
+        questionone_sp = (Spinner)findViewById(R.id.questionone);
+        questiontwo_sp = (Spinner)findViewById(R.id.questiontwo);
         answerone_tv = (EditText)findViewById(R.id.answerone);
         answertwo_tv = (EditText)findViewById(R.id.answertwo);
         Back_bt = (Button)findViewById(R.id.back);
@@ -374,6 +394,8 @@ public class Edit_Profile_Activity extends Activity implements AsyncTaskListener
         ward_ui = (LinearLayout)findViewById(R.id.ward_ui);
         panchayat_ui = (LinearLayout)findViewById(R.id.panchayat_ui);
         municipality_ui = (LinearLayout)findViewById(R.id.municipality_ui);
+        question_one_ui = (LinearLayout)findViewById(R.id.question_one_ui);
+        question_two_ui = (LinearLayout)findViewById(R.id.question_two_ui);
     }
 
 
@@ -416,7 +438,7 @@ public class Edit_Profile_Activity extends Activity implements AsyncTaskListener
                                CVTN = new CencusVillage_Town_New();
                                CVTN.setCode(entry.getKey());
                                CVTN.setName(entry.getValue());
-                               System.out.println(entry.getKey() + "/" + entry.getValue());
+                              // System.out.println(entry.getKey() + "/" + entry.getValue());
                                Village_Town_New.add(CVTN);
                            }
                            adapter_village_town = new SpinAdapter_Village_Town(Edit_Profile_Activity.this, android.R.layout.simple_spinner_item, Village_Town_New);
@@ -465,6 +487,53 @@ public class Edit_Profile_Activity extends Activity implements AsyncTaskListener
                    panchayat_sp.setAdapter(adapter_panchayat);
                  panchayat_ui.setVisibility(View.VISIBLE);
 
+             }else if(taskType == TaskType.QUESTION_ONE) {
+                 ObjectMapper mapper = new ObjectMapper();
+                 mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+                 Question_One_Server = new HashMap<String, String>();
+                 Question_One_Server = mapper.readValue(result, new TypeReference<Map<String, String>>() {
+                 });
+
+                 if (Question_One_Server.size() == 0) {
+                     question_one_ui.setVisibility(View.GONE);
+                 } else {
+                     Question_One_List = new ArrayList<>();
+                     Question_One Q_one = null;
+                     for (Map.Entry<String, String> entry : Question_One_Server.entrySet()) {
+                         Q_one = new Question_One();
+                         Q_one.setQuestion_Key(entry.getKey());
+                         Q_one.setQuestion_Value(entry.getValue());
+                         // System.out.println(entry.getKey() + "/" + entry.getValue());
+                         Question_One_List.add(Q_one);
+                     }
+                     adapter_question_one = new SpinnerAdapter_Question_One(Edit_Profile_Activity.this, android.R.layout.simple_spinner_item, Question_One_List);
+                     questionone_sp.setAdapter(adapter_question_one);
+                 }
+             }else if(taskType == TaskType.QUESTION_TWO){
+                 ObjectMapper mapper = new ObjectMapper();
+                 mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+                 Question_Two_Server = new HashMap<String, String>();
+                 Question_Two_Server = mapper.readValue(result, new TypeReference<Map<String, String>>() {
+                 });
+
+                 if (Question_Two_Server.size() == 0) {
+                     question_two_ui.setVisibility(View.GONE);
+                 } else {
+                     Question_Two_List = new ArrayList<>();
+                     Question_Two Q_Two = null;
+                     for (Map.Entry<String, String> entry : Question_Two_Server.entrySet()) {
+                         Q_Two = new Question_Two();
+                         Q_Two.setQuestion_Key(entry.getKey());
+                         Q_Two.setQuestion_Value(entry.getValue());
+                         // System.out.println(entry.getKey() + "/" + entry.getValue());
+                         Question_Two_List.add(Q_Two);
+                     }
+                     adapter_question_two = new SpinnerAdapter_Question_Two(Edit_Profile_Activity.this, android.R.layout.simple_spinner_item, Question_Two_List);
+                     questiontwo_sp.setAdapter(adapter_question_two);
+                 }
+
+             }else{
+                 Custom_Dialog.showDialog(Edit_Profile_Activity.this,"Please Restart the application.");
              }
 
 
