@@ -33,7 +33,7 @@ String rating = "1.0";
             dialog_ok.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                   // activity.finish();
+                    activity.finish();
                     dialog.dismiss();
                 }
             });

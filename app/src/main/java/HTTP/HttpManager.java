@@ -114,18 +114,22 @@ public class HttpManager {
             conn_.setUseCaches(false);
             conn_.setConnectTimeout(10000);
             conn_.setReadTimeout(10000);
-            conn_.setRequestProperty("Content-Type", "application/json");
+            conn_.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             conn_.connect();
 
            //Convert the Object into Json Object
             ObjectMapper mapper = new ObjectMapper();
            String jsonInString = mapper.writeValueAsString(customer_to_send);
               Log.e("String",jsonInString);
-            JSONObject obj = new JSONObject(jsonInString);
+            StringBuilder New_String = new StringBuilder();
+            New_String.append("jsonData=");
+            New_String.append(jsonInString);
 
-            Log.d("My App data in Json", obj.toString());
+          //  JSONObject obj = new JSONObject(New_String.toString());
+
+            Log.e("My App data in Json", New_String.toString());
             OutputStreamWriter out = new OutputStreamWriter(conn_.getOutputStream());
-            out.write(obj.toString());
+            out.write(New_String.toString());
             out.close();
 
             try{
@@ -153,13 +157,11 @@ public class HttpManager {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
         } finally{
             if(conn_!=null)
                 conn_.disconnect();
         }
-        return response.toString();
+        return response.toString().trim();
     }
 
 
